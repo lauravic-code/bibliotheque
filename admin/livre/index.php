@@ -141,7 +141,7 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                             }else{
                                 $cat='non categorisé';
                             }
-               
+            //    je change un truc
                             ?>
 
                             
