@@ -1,0 +1,579 @@
+
+/* ****************************************************************************************** */
+/* ******************************GENERAL***************************************************** */
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+:root{
+    --jaune:#D4AF06;
+    --bleu: rgb(45, 145, 170);
+}
+
+ul{
+    list-style-type: none;
+    
+}
+
+body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+/* ****************************************************************************************** */
+/* ******************************HEADER***************************************************** */
+
+
+/* ------------------BACKGROUND------------------------ */
+#blockHeader{
+    display: flex;
+    /* position: relative; */
+    background-image: url(img/bibliotheque3.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 550px;
+    width: 100%;
+}
+
+
+/* ------------------BARRE JAUNE------------------------ */
+#ligne_top::before{   
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: var(--jaune);
+    height: 5px;
+    content: "";
+    z-index: 999;
+}
+
+/* ------------------ETIQUETTES------------------------ */
+#blockEtiquettes{
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    top: 0;
+    right:0.5%;
+    width: 13%;
+}
+
+.etiquette{
+    background-color: var(--jaune);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 40px;
+    width: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.etiquette:hover{
+    height: 45px;
+    transition: 0.2s;
+}
+
+.white {
+    color: white;
+}
+
+
+#etiquette_connection{
+    opacity: 0;
+}
+.fa-user-top{
+    opacity: 0;
+}
+
+
+/* --- ---------------BARRE DE RECHERCHE------------------------ */
+
+/* -------GENERAL-------- */
+#searchZone{
+    margin: auto;
+    display: flex;
+}
+
+#rectRecherche{
+    background-color: #fff;
+    border-radius: 15px;
+    height: 40px;
+    width: 600px;
+    content:"";   
+    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.8)
+}
+
+#form_search{
+    display: flex;
+    position: relative;
+    width: 600px;
+    height: 40px;
+}
+
+/* -------INPUT ET SON AFTER-------- */
+#input_search{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    position: absolute;
+    top: 13px;
+    left: 25px;
+    border-style: none none solid;
+    border-width: 1px;
+    border-color: rgb(196, 194, 194);
+    width: 500px;
+    text-align: center;
+    color: grey;
+}
+
+input#input_search:hover{
+    border-color: black;
+    border-width: 1.5px;
+}
+
+input#input_search:focus{
+    border-style: none none solid;
+    outline: none;
+    border-color: rgb(45, 145, 170);
+}
+
+
+/* -------BOUTON-------- */
+#btn_search{
+    position: absolute;
+    right: 25px;
+    top:13px;
+}
+
+
+
+/* ------------------ENSEMBLE BARRE MENU------------------------ */
+
+/* -------GENERAL-------- */
+#ensemble_barre_menu{
+    display: flex;
+    position: sticky;
+    top:0;
+    /* right: 0;
+    left: 0; */
+    color: #fff;    
+    height: 40px;
+    margin-top: -40px;
+}
+
+
+a{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+
+/* -------MENU GAUCHE-------- */
+
+.barre_bleu{
+    width: 86%;
+    background-color: var(--bleu);
+    display: flex;  
+    align-items: center;
+   
+}
+
+#navBarre{
+     border-top-right-radius: 5px;
+}
+
+ul{
+    display: flex;
+    margin-left: 40px;
+}
+
+#li_menupcpal{
+    width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#li_menupcpal:hover{
+    background-color: var(--jaune);
+    font-weight: bold;
+
+}
+
+#sousMenuCat{
+    display: none;
+}
+
+
+/* -------DIV VIDE-------- */
+#div_vide{
+    width: 1%;
+    content:"";
+}
+
+/* -------MENU CONNECTION-------- */
+#connection{
+    display:flex;
+    width: 13%;
+    background-color: var(--jaune);
+    align-items: center;
+    border-top-left-radius: 5px;
+}
+
+#a_connection{
+    display: flex;
+    margin: auto;
+}
+
+#txtConnection:hover{
+    font-weight: bold;
+}
+
+#logo_monCompte{
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+
+
+/* ****************************************************************************************** */
+/* ******************************SECTION 1***************************************************** */
+
+#session1{
+    margin-top: 150px;
+    display: grid;
+    grid-template-columns:0.2fr 2fr 1fr 0.5fr;
+    grid-column-gap:150px;
+}
+
+#gpe_actualite{  
+
+border-style: none none solid solid;
+border-color: var(--jaune);
+border-width: 2px;
+padding-left: 30px;
+padding-bottom: 30px;
+}
+
+.actualite{
+    display: flex;
+
+}
+
+#h1_actualite{
+    font-size:300%;
+    font-weight: bold;
+    color: var(--jaune);
+    text-shadow: 2px 2px 1px rgb(179, 178, 178);;
+}
+
+.txtActualite{
+    width: 60%;
+    text-align: justify;
+}
+
+#txtActualite2{
+    margin: auto;
+}
+
+.poster_actualite{
+    height: 200px;
+    width: 160px;
+}
+
+#poster_actualite1{
+    margin-left: 20px;
+}
+
+#actualite2{
+    margin-top: 50px;
+}
+#poster_actualite2{
+    margin-right: 20px;
+}
+
+#agenda{
+   
+    display:flex;
+    flex-direction:column;
+    border-style: solid;
+    border-width: 0.1px;
+    border-color: rgb(218, 216, 216);
+    border-radius: 5px;
+    box-shadow:5px 5px 4px 1px grey;
+    height: 500px;
+}
+
+
+#text_agenda{
+    background-color: var(--bleu);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    /* width: 100%; */
+    height: 50px;
+    text-align: center;
+  
+}
+#h2_agenda{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 200%;
+    color: white;
+    margin-top: 5px;
+}
+
+#jour_agenda{
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+
+
+
+.h3_date{
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+}
+
+.p_agenda{
+    text-align:left;
+    margin-left: 15px;
+}
+
+.jours{
+    margin-bottom: 12px;
+}
+
+
+
+
+/* ****************************************************************************************** */
+/* ******************************SECTION 2***************************************************** */
+
+
+#h1_carousselLivre{
+    padding-top: 40px;
+    text-align: center;
+    font-size: 250%;
+    color: white;
+}
+
+#h1_carousselLivre::after{
+    content:" ";
+    height: 2px;
+    background-color: white;
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+/* MA SECTION */
+#session2{
+    width: 90%;
+    background-color: var(--jaune);
+    margin: auto;
+    margin-top: 200px;
+    height: 500px;
+    border-radius: 5px;
+}
+    /* caroussel qui regroupe tous les livres */
+        #carousselLivre{
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+
+            padding: 40px 80px;
+            height: 60%;
+        }
+            /* chaque livre */
+
+                .livreDelaSemaine{
+                    position: relative;
+                    width: 17%;
+                    text-align: center;
+
+                }
+
+                        .image_caroussel{
+                            justify-content: center;
+
+                            width: 100%;
+                            height: 100%;
+                            box-shadow: 3px 3px 5px 3px #756201;
+
+                            bottom: 0;
+                        }
+
+                        /* .image_caroussel:hover + .resume_livres{
+                            opacity: 1;
+                        } */
+
+                        .resume_livres:hover{
+                            opacity: 1;                         
+                        }
+
+
+                        /* resume de chaque livre (que je veux mettre en display none puis jouer sur le hover plsu tard*/
+                        .resume_livres{
+                            display: flex;
+                            /* display: none; */
+                            position: absolute;
+                            max-width: 100%;
+                            height: 100%;
+                            top: 50%;
+                            /* background-color: white; */
+                            top: 0;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            align-items: center;
+                            opacity: 0;
+                            transition: 200ms ease-in;
+                        }
+             
+/* ****************************************************************************************** */
+/* ******************************FOOTER***************************************************** */
+
+#footer{
+    height: 100px;
+    margin-top: 200px;
+    background-color: var(--bleu); 
+    display: flex;   
+    align-items: center;
+}
+
+#rect_footer{
+    width: 100%;
+    display: grid;
+    grid-template-columns:5fr 5fr;
+    gap : 1fr
+    /* margin: auto; */
+}
+
+#newsletter{
+    right: 0;
+}
+#logozgvv{
+    color: #128064;
+}
+
+
+
+/* ------------------------------------------------------------------------------------------- */
+/* * ****************************************************************************************** */ */
+/* -----------------------------PAGE CONTACT --------------------------------------------------*/
+/* ******************************************************************************************* */
+/* ------------------------------------------------------------------------------------------- */
+
+
+
+#marchepas{
+    background-image: url("img/bibliotheque3-transparente.jpg");
+    /* background-color:green; */
+    width:500px;
+    height: 200px;
+    background-repeat: no-repeat ;
+    background-size: cover;
+    width: 500px;
+    height: 100px;
+    align-items: center;
+    margin-top: 50px;
+    border-style: solid;
+    border-color: red;
+    } 
+
+    .etiquette_contact{
+        background-color: var(--jaune);
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        height: 45px;
+        width: 42px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .etiquette:hover{
+        height: 50px;
+        transition: 0.2s;
+    }
+    #navBarre2{
+        margin-top: 5px;
+        border-bottom-right-radius: 5px;
+   }
+
+    #form_contact{
+        background-image: url(img/bibliotheque3-transparente.jpg); 
+    }
+
+    #titre_form{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-top: 70px;
+        margin-bottom: 60px;
+    }
+
+    #h1_contact::after{
+        content:" ";
+        height: 50px;
+        width: 500px;
+        background-color: red;
+        /* align-items: center; */
+    }
+
+    #div_formulaire{
+        display: flex;
+        justify-content: center;
+
+    }
+
+    #partie1_form{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .form{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 25px;
+    }
+
+    .input_contact{
+        width: 250px;
+        height: 30px;
+        border-radius: 5px;
+        box-shadow: inset -2px -2px 2px 1px gray;
+        border-style: none;
+    }
+
+    #msg{
+        width: 100%;
+        height: 150px;
+        border-radius: 5px;
+        box-shadow: inset 2px 2px 2px 1px grey;
+        border-style: none;
+
+    }
+
+    #div_btn_contact{
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+       
+    }
+.btn_contact{
+    background-color: rgb(167, 166, 166);
+    border-style: none;
+    border-radius: 5px;
+    width: 80px;
+    height: 25px;
+    box-shadow: 3px 3px 3px grey;
+}

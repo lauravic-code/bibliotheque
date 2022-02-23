@@ -1,0 +1,12 @@
+.form-control{
+    width: 80%;
+}
+
+.card-img-top{
+    width: 20px;
+    height: 30px;
+}
+
+body{
+    overflow: scroll !important;
+}
