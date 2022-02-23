@@ -132,16 +132,21 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                             $requete->execute ([$id_livre]);
                             $cat=$requete->fetchAll(PDO::FETCH_NUM);
                             
+                            // var_dpump($cat);
+
                             if(!empty($cat)){
                                 if(count($cat)>1){
-                                    $list_cat= implode('',$cat);
+                                    foreach($cat as $libelle_cat){
+                                    $list_cat[]= implode('',$libelle_cat);
+                                }
+                                    // var_dump(implode('',$cat[0]));
                                 }else{
-                                    $list_cat=implode('',$cat[0]);
+                                    $list_cat[]=implode('',$cat[0]);
                                 }
                             }else{
-                                $cat='non categorisé';
+                                $list_cat='non categorisé';
                             }
-            //    je change un truc
+
                             ?>
 
                             
@@ -155,7 +160,8 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                                 </td>
                                 <td><?= substr($livre["resume"], 0, 50) ?> [...]
                                 </td>
-                                <td><?= $list_cat ?>
+                                <td><?= implode("<br>", $list_cat)
+                                ?>
                                 </td>
                                 <td><?= $livre["prix"] ?> €
                                 </td>
@@ -170,6 +176,7 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                                 <td><a href="<?= URL_ADMIN ?>livre/update.php?id=<?= $livre["id_livre"] ?>" class="btn btn-warning">Modifier</a></td>
                                 <td><a href="<?= URL_ADMIN ?>livre/action.php?id=<?= $livre["id_livre"] ?>" class="btn btn-danger">Supprimer</a></td>
                             </tr>
+                            <?php $list_cat=[]?>
                         <?php endforeach; ?>
 
                     </tbody>
