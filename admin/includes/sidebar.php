@@ -153,6 +153,20 @@
         </div>
     </div>
 </li>
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+        aria-expanded="true" aria-controls="collapseFour">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Auteurs</span>
+    </a>
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestion auteurs :</h6>
+            <a class="collapse-item" href="<?php echo URL_ADMIN ?>auteur/index.php">Liste des auteurs</a>
+            <a class="collapse-item" href="<?php echo URL_ADMIN ?>auteur/add.php">Ajouter un auteur</a>
+        </div>
+    </div>
+</li>
 
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
