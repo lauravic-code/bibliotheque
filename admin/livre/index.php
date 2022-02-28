@@ -9,12 +9,19 @@ if (!isConnect()) {
 }
 
 
-$sql = "SELECT livre.id AS id_livre, categorie.id AS id_categorie, livre.num_ISBN, livre.titre, livre.illustration, livre.resume, livre.prix, livre.nb_pages, livre.date_achat, livre.disponibilite, categorie.libelle FROM categorie_livre INNER JOIN livre ON categorie_livre.id_livre=livre.id INNER JOIN categorie ON categorie_livre.id_categorie=categorie.id";
+// $sql = "SELECT livre.id AS id_livre, livre.num_ISBN, livre.titre, livre.illustration, livre.resume, livre.prix, livre.nb_pages, livre.date_achat, livre.disponibilite 
+// FROM categorie_livre 
+// INNER JOIN livre 
+// ON categorie_livre.id_livre=livre.id";
+// $requete = $bdd->query($sql);
+// $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "SELECT livre.id AS id_livre, livre.num_ISBN, livre.titre, livre.illustration, livre.resume, livre.prix, livre.nb_pages, livre.date_achat, livre.disponibilite 
+FROM livre";
 $requete = $bdd->query($sql);
 $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -176,7 +183,10 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                                 <td><a href="<?= URL_ADMIN ?>livre/update.php?id=<?= $livre["id_livre"] ?>" class="btn btn-warning">Modifier</a></td>
                                 <td><a href="<?= URL_ADMIN ?>livre/action.php?id=<?= $livre["id_livre"] ?>" class="btn btn-danger">Supprimer</a></td>
                             </tr>
+
+                            <!-- je vide le tableau $list_cat car sinon, à chaque tour, il cumule les catégories et les ajoute en liste dans le td categorie :     -->
                             <?php $list_cat=[]?>
+                            
                         <?php endforeach; ?>
 
                     </tbody>

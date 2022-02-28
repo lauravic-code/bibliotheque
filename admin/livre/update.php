@@ -3,8 +3,8 @@
 
 include "../config/config.php";
 
-if(!isConnect()){
-    header('location:' .URL_ADMIN .'login.php' );
+if (!isConnect()) {
+    header('location:' . URL_ADMIN . 'login.php');
     die;
 }
 
@@ -24,6 +24,30 @@ if (isset($_GET['id'])) {
 } else {
     header('location:index.php');
 }
+
+$sql = 'SELECT * FROM categorie';
+$requete = $bdd->query($sql);
+$categories = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+$sql='SELECT id_categorie FROM categorie_livre WHERE id_livre = ?';
+$requete=$bdd->prepare($sql);
+
+$list_cats=[$id];
+$requete->execute($list_cats);
+
+$list_cats=$requete->fetchAll(PDO::FETCH_NUM);
+
+$categorie_id=[];
+if(count($list_cats)>1){
+    foreach($list_cats as $id_cat){
+        $categorie_id[]=implode("",$id_cat);
+    }
+    
+}else{
+    $categorie_id=$list_cats[0];
+}
+
+$select=""
 ?>
 
 
@@ -46,19 +70,21 @@ if (isset($_GET['id'])) {
 
     <!-- Custom styles for this template-->
     <link href="<?php echo URL_ADMIN ?>css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
 </head>
 
 <body id="page-top">
     <div id="wrapper">
 
- <!-- INCLUDE SIDEBAR --> <?php include PATH_ADMIN . "includes/sidebar.php"; ?>
-       
+        <!-- INCLUDE SIDEBAR --> <?php include PATH_ADMIN . "includes/sidebar.php"; ?>
+
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
 
-<!-- INCLUDE TOPBAR -->  <?php include PATH_ADMIN . "includes/topbar.php"; ?>
-                
+                <!-- INCLUDE TOPBAR --> <?php include PATH_ADMIN . "includes/topbar.php"; ?>
+
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Modifier un livre</h1>
@@ -77,15 +103,29 @@ if (isset($_GET['id'])) {
                     </div>
                     <div class="mb-3">
                         <label for="illustration" class="form-label">Illustration :</label>
-                        <input type="file" name="illustration" class="form-control" id="illustration" value="<?php echo $livre['illustration'] ?>"><img src="<?=URL_ADMIN."img/cover/".$livre["illustration"]?>>
+                        <input type="file" name="illustration" class="form-control" id="illustration" value="<?php echo $livre['illustration'] ?>"><img src="<?= URL_ADMIN . "img/cover/" . $livre["illustration"] ?>>
                     </div>
-                    <div class="mb-3">
+                    <div class=" mb-3">
                         <label for="resume" class="form-label">Résumé :</label>
                         <textarea name="resume" class="form-control" id="resume" rows="3"><?php echo $livre['resume'] ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="prix" class="form-label">Prix :</label>
                         <input type="number" name="prix" class="form-control" id="prix" value="<?php echo $livre['prix'] ?>">
+                    </div>
+                    <div class="select_cat_block d-flex flex-column col-25">
+                        <label for="categorie" class="form-label">Catégorie :</label>
+                        <select class="select-cat" name="categorie[]" multiple id="cat">
+                            <?php foreach ($categories as $categorie) : ?>
+                                <?php if(in_array($categorie['id'],$categorie_id)){
+                                    $selected="selected";
+                                }else{
+                                    $selected="";
+                                } ?>
+                                <option value="<?= $categorie['id'] ?>" <?=$selected?>><?= $categorie['libelle'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="nb_pages" class="form-label">Nombre de pages :</label>
@@ -112,8 +152,15 @@ if (isset($_GET['id'])) {
                 </form>
 
             </div>
- 
-<!-- INCLUDE FOOTER --> <?php  include PATH_ADMIN . "includes/footer.php";?>
+
+            <!-- INCLUDE FOOTER --> <?php include PATH_ADMIN . "includes/footer.php"; ?>
+
             
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            <script>
+                $('.select-cat').select2();
+            </script>
+
 </body>
+
 </html>

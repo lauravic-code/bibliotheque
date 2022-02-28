@@ -6,9 +6,14 @@ if (!isConnect()) {
     die;
 }
 
-$sql = "SELECT utilisateur.id AS id_utilisateur, utilisateur.nom, utilisateur.prenom, utilisateur.pseudo, utilisateur.mail, utilisateur.num_telephone, utilisateur.avatar, utilisateur.adresse, utilisateur.ville, utilisateur.code_postal, role.libelle FROM role_utilisateur INNER JOIN role ON role_utilisateur.id_role=role.id INNER JOIN utilisateur ON role_utilisateur.id_utilisateur=utilisateur.id";
-$requete = $bdd->query($sql);
+$sql = "SELECT utilisateur.id AS id_utilisateur, utilisateur.nom, utilisateur.prenom, utilisateur.pseudo, utilisateur.mail, utilisateur.num_telephone, utilisateur.avatar, utilisateur.adresse, utilisateur.ville, utilisateur.code_postal, role.libelle 
+FROM role_utilisateur 
+INNER JOIN role 
+ON role_utilisateur.id_role=role.id 
+INNER JOIN utilisateur 
+ON role_utilisateur.id_utilisateur=utilisateur.id";
 
+$requete = $bdd->query($sql);
 $utilisateurs = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
