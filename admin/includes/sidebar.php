@@ -167,6 +167,35 @@
         </div>
     </div>
 </li>
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+        aria-expanded="true" aria-controls="collapseFive">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Usagers</span>
+    </a>
+    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestion usagers :</h6>
+            <a class="collapse-item" href="<?php echo URL_ADMIN ?>usager/index.php">Liste des usagers</a>
+            <a class="collapse-item" href="<?php echo URL_ADMIN ?>usager/add.php">Ajouter un usager</a>
+        </div>
+    </div>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix"
+        aria-expanded="true" aria-controls="collapseSix">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Locations</span>
+    </a>
+    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestion locations :</h6>
+            <a class="collapse-item" href="<?php echo URL_ADMIN ?>location/index.php">Liste des locations</a>
+            <a class="collapse-item" href="<?php echo URL_ADMIN ?>location/add.php">Ajouter une location</a>
+            <a class="collapse-item" href="<?php echo URL_ADMIN ?>location/cloturee.php">Locations archivées</a>
+        </div>
+    </div>
+</li>
 
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">

@@ -34,7 +34,6 @@ $requete=$bdd->prepare($sql);
 
 $list_cats=[$id];
 $requete->execute($list_cats);
-
 $list_cats=$requete->fetchAll(PDO::FETCH_NUM);
 
 $categorie_id=[];
@@ -46,6 +45,29 @@ if(count($list_cats)>1){
 }else{
     $categorie_id=$list_cats[0];
 }
+
+$sql='SELECT * FROM auteur';
+$requete=$bdd->query($sql);
+$auteurs = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+$sql='SELECT id_auteur FROM auteur_livre WHERE id_livre = ?';
+$requete=$bdd->prepare($sql);
+
+$list_auteurs=[$id];
+$requete->execute($list_auteurs);
+$list_auteurs=$requete->fetchAll(PDO::FETCH_NUM);
+
+$auteurs_id=[];
+if(count($list_auteurs)>1){
+    foreach($list_auteurs as $id_auteurs){
+        $auteurs_id[]=implode("",$id_auteurs);
+    }
+    
+}else{
+    $auteurs_id=$list_auteurs[0];
+}
+
+
 
 $select=""
 ?>
@@ -127,6 +149,20 @@ $select=""
 
                         </select>
                     </div>
+                    <div class="select_auteur_block d-flex flex-column col-25">
+                        <label for="auteur" class="form-label">Auteur :</label>
+                        <select class="select-auteur" name="auteur[]" multiple id="auteur">
+                            <?php foreach ($auteurs as $auteur) : ?>
+                                <?php if(in_array($auteur['id'],$auteurs_id)){
+                                    $selected="selected";
+                                }else{
+                                    $selected="";
+                                } ?>
+                                <option value="<?= $auteur['id'] ?>" <?=$selected?>><?= $auteur['nom']." ".$auteur['prenom'] ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="nb_pages" class="form-label">Nombre de pages :</label>
                         <input type="text" name="nb_pages" class="form-control" id="nb_pages" value="<?php echo $livre['nb_pages'] ?>">
@@ -159,6 +195,7 @@ $select=""
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
             <script>
                 $('.select-cat').select2();
+                $('.select-auteur').select2();
             </script>
 
 </body>

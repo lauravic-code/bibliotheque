@@ -82,6 +82,7 @@ if (isset($_POST['btn_update_livre'])) {
     $date_achat = $date->format("Y-m-d");
     $disponibilite = htmlentities($_POST['disponibilite']);
     $categories= $_POST['categorie'];
+    $auteurs=$_POST['auteur'];
 
     if(!empty($_FILES['illustration']['name'])){
        
@@ -154,7 +155,7 @@ if (isset($_POST['btn_update_livre'])) {
             header('location: update.php?id='.$id);
         };
 
-        echo 'marche';
+        // echo 'marche';
         // var_dump($requete);
         // die;
 // var_dump($categories);
@@ -162,6 +163,7 @@ if (isset($_POST['btn_update_livre'])) {
 
         foreach($categories as $id_categorie){
         // var_dump($categories);
+        // die;
         // var_dump($id_categorie);
         $sql='INSERT INTO categorie_livre VALUES(:id_categorie, :id_livre)';
         $requete=$bdd->prepare($sql);
@@ -179,8 +181,48 @@ if (isset($_POST['btn_update_livre'])) {
             echo 'probleme';
             die;
             header('location:update.php?id='.$id);
+        }
+        }
+
+        $sql= 'DELETE FROM auteur_livre WHERE id_livre = :id_livre ';
+        $requete=$bdd->prepare($sql);
+
+        $data=[':id_livre'=>$id];
+
+        // var_dump($requete);
+        // die;
+
+        if(!$requete->execute($data)){
+            echo 'marche pas';
+            // erreur
+            $requete->errorInfo();
+            die;
+            header('location: update.php?id='.$id);
         };
-    }
+
+        foreach($auteurs as $id_auteur){
+        // var_dump($categories);
+        // var_dump($id_categorie);
+        $sql='INSERT INTO auteur_livre VALUES(:id_auteur, :id_livre, NOW())';
+        $requete=$bdd->prepare($sql);
+        $data=[
+            ':id_auteur' => $id_auteur,
+            ':id_livre' => $id
+        ];
+
+
+        // var_dump($id_categorie);
+        // var_dump($id);
+        // var_dump($data);
+        // var_dump($requete);
+        // die;
+        if(!$requete->execute($data)){
+            // erreur
+            echo 'probleme';
+            die;
+            header('location:update.php?id='.$id);
+        };
+        }
 
 
 
@@ -205,8 +247,7 @@ if (isset($_GET["id"])) {
         $dossier_illustration = PATH_ADMIN . "img/cover/" . $hold_illustration;
 
         if (!file($dossier_illustration)) {
-            echo ('file');
-            die;
+            
             $SESSION['erreur_file_cover'] = true;
             header('location:index.php');
             die;
@@ -220,6 +261,20 @@ if (isset($_GET["id"])) {
             die;
         }
 
+        $sql='DELETE FROM categorie_livre WHERE id_livre=:id';
+        $requete=$bdd->prepare($sql);
+        $data=[':id'=>$id];
+
+        if(!$requete->execute($data)){
+            var_dump($requete);
+            die;
+        };
+
+        $sql='DELETE FROM auteur_livre WHERE id_livre=:id';
+        $requete=$bdd->prepare($sql);
+        $data=[':id'=>$id];
+
+        $requete->execute($data);
 
         $sql = "DELETE FROM livre WHERE id=:id";
         $requete = $bdd->prepare($sql);

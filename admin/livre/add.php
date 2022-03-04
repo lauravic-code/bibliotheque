@@ -11,6 +11,10 @@ $sql = 'SELECT * FROM categorie';
 $requete = $bdd->query($sql);
 $categories = $requete->fetchAll(PDO::FETCH_ASSOC);
 
+$sql='SELECT * FROM auteur';
+$requete=$bdd->query($sql);
+$auteurs= $requete->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -68,10 +72,17 @@ $categories = $requete->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="row d-flex">
                                     <div class="mb-3">
                                         <div class="select_cat_block d-flex flex-column col-25">
-                                            <label for="categorie[]" class="form-label">Catégorie :</label>
+                                            <label for="categorie" class="form-label">Catégorie :</label>
                                             <select class="select-cat" name="categorie[]" multiple id="cat">
                                                 <?php foreach ($categories as $categorie) : ?>
                                                     <option value="<?= $categorie['id'] ?>"><?= $categorie['libelle'] ?> </option>
+                                                <?php endforeach ?>
+
+                                            </select>
+                                            <label for="auteur" class="form-label">Auteur :</label>
+                                            <select class="select-auteur" name="auteur[]" multiple id="auteur">
+                                                <?php foreach ($auteurs as $auteur) : ?>
+                                                    <option value="<?= $auteur['id'] ?>"><?= $auteur['nom']." ".$auteur['prenom'] ?> </option>
                                                 <?php endforeach ?>
 
                                             </select>
@@ -127,6 +138,8 @@ $categories = $requete->fetchAll(PDO::FETCH_ASSOC);
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
             <script>
                 $('.select-cat').select2();
+                $('.select-auteur').select2();
+
             </script>
 
 </body>

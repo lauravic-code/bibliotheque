@@ -6,13 +6,7 @@ if (!isConnect()) {
     die;
 }
 
-$sql = "SELECT utilisateur.id AS id_utilisateur, utilisateur.nom, utilisateur.prenom, utilisateur.pseudo, utilisateur.mail, utilisateur.num_telephone, utilisateur.avatar, utilisateur.adresse, utilisateur.ville, utilisateur.code_postal, role.libelle 
-FROM role_utilisateur 
-INNER JOIN role 
-ON role_utilisateur.id_role=role.id 
-INNER JOIN utilisateur 
-ON role_utilisateur.id_utilisateur=utilisateur.id";
-
+$sql = "SELECT * FROM utilisateur";
 $requete = $bdd->query($sql);
 $utilisateurs = $requete->fetchAll(PDO::FETCH_ASSOC);
 
@@ -126,9 +120,37 @@ $utilisateurs = $requete->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
 
-                    <?php foreach ($utilisateurs as $utilisateur) : ?>
+                    <?php foreach ($utilisateurs as $utilisateur) : 
+                        
+                        $sql='SELECT role.libelle 
+                        FROM role_utilisateur
+                        INNER JOIN role
+                        ON role_utilisateur.id_role=role.id
+                        WHERE role_utilisateur.id_utilisateur= ?';
+                        $requete=$bdd->prepare($sql);
+                        $data=[$utilisateur["id"]];
+
+                        $requete->execute($data);
+                        $roles=$requete->fetchAll(PDO::FETCH_NUM);  
+                        // var_dump($data);
+                        // var_dump($roles);
+                        // die;           
+
+                        if(count($roles)>1){
+                            foreach($roles as $role){
+                            $list_role[] = implode("",$role);
+                        }
+                        }else{
+                            $list_role[]=$role[0];
+                        }
+                        // var_dump($role[0]);
+
+                    
+                        ?>
+
+                        
                         <tr>
-                            <th scope="row"><?= $utilisateur["id_utilisateur"] ?></th>
+                            <th scope="row"><?= $utilisateur["id"] ?></th>
                             <td class=""><?= $utilisateur["nom"] ?></td>
                             <td class=""><?= $utilisateur["prenom"] ?></td>
                             <td class=""><?= $utilisateur["pseudo"] ?></td>
@@ -138,12 +160,17 @@ $utilisateurs = $requete->fetchAll(PDO::FETCH_ASSOC);
                             <td class=""><?= $utilisateur["adresse"] ?></td>
                             <td class=""><?= $utilisateur["ville"] ?></td>
                             <td class=""><?= $utilisateur["code_postal"] ?> </td>
-                            <td class=""><?= $utilisateur["libelle"] ?> </td>
-                            <td class=""><a href="<?= URL_ADMIN ?>utilisateur/single.php?id=<?= $utilisateur["id_utilisateur"] ?>" class="btn btn-primary">Voir</a></td>
-                            <td class=""><a href="<?= URL_ADMIN ?>utilisateur/update.php?id=<?= $utilisateur["id_utilisateur"] ?>" class="btn btn-warning">Modifier</a></td>
-                            <td class=""><a href="<?= URL_ADMIN ?>utilisateur/action.php?id=<?= $utilisateur["id_utilisateur"] ?>" class="btn btn-danger">Supprimer</a></td>
+                            <td class=""><?= implode("<br>",$list_role) ?> </td>
+                            <td class=""><a href="<?= URL_ADMIN ?>utilisateur/single.php?id=<?= $utilisateur["id"] ?>" class="btn btn-primary">Voir</a></td>
+                            <td class=""><a href="<?= URL_ADMIN ?>utilisateur/update.php?id=<?= $utilisateur["id"] ?>" class="btn btn-warning">Modifier</a></td>
+                            <td class=""><a href="<?= URL_ADMIN ?>utilisateur/action.php?id=<?= $utilisateur["id"] ?>" class="btn btn-danger">Supprimer</a></td>
                         </tr>
-                    <?php endforeach; ?>
+                    
+                    <?php $list_role=[];
+                
+                    endforeach; ?>
+                        
+                    
 
                 </tbody>
             </table>

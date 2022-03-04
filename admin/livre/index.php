@@ -89,7 +89,7 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                 }
 
                 if (isset($_SESSION['erreur_supp_livre']) && $_SESSION['erreur_supp_livre'] == true) {
-                    echo alert('success', 'ATTENTION! le livre n\'a pas été supprimé!');
+                    echo alert('danger', 'ATTENTION! le livre n\'a pas été supprimé!');
                     unset($_SESSION['erreur_supp_livre']);
                 }
 
@@ -112,6 +112,7 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                             <th scope="col">Illustration</th>
                             <th scope="col">Résumé</th>
                             <th scope="col">Catégorie</th>
+                            <th scope="col">Auteur</th>
                             <th scope="col">Prix</th>
                             <th scope="col">Nb de pages</th>
                             <th scope="col">Date d'achat</th>
@@ -139,14 +140,11 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                             $requete->execute ([$id_livre]);
                             $cat=$requete->fetchAll(PDO::FETCH_NUM);
                             
-                            // var_dpump($cat);
-
                             if(!empty($cat)){
                                 if(count($cat)>1){
                                     foreach($cat as $libelle_cat){
                                     $list_cat[]= implode('',$libelle_cat);
                                 }
-                                    // var_dump(implode('',$cat[0]));
                                 }else{
                                     $list_cat[]=implode('',$cat[0]);
                                 }
@@ -154,6 +152,37 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                                 $list_cat='non categorisé';
                             }
 
+                            $sql='SELECT nom, prenom 
+                            FROM auteur_livre
+                            INNER JOIN auteur
+                            ON id_auteur=auteur.id
+                            WHERE id_livre= ?';
+
+                            $requete=$bdd->prepare($sql);
+                            $id_livre=$livre["id_livre"];
+                            $requete->execute ([$id_livre]);
+                            $auteurs=$requete->fetchAll(PDO::FETCH_NUM);
+
+                            // var_dump($auteurs);
+                            // die;
+
+                            if(!empty($auteurs)){
+                                if(count($auteurs)>1){
+                                    foreach($auteurs as $auteur){
+                                    $list_auteurs[]= implode(' ',$auteur);
+                                }
+                                    // var_dump(implode('',$cat[0]));
+                                }else{
+                                    $list_auteurs[]=implode(' ',$auteurs[0]);
+                                }
+                            }else{
+                                $list_auteurs='non categorisé';
+                            }
+
+                            
+                            // var_dpump($cat);
+
+                            
                             ?>
 
                             
@@ -169,6 +198,8 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                                 </td>
                                 <td><?= implode("<br>", $list_cat)
                                 ?>
+                                <td><?= implode("<br>", $list_auteurs)
+                                ?>                            
                                 </td>
                                 <td><?= $livre["prix"] ?> €
                                 </td>
@@ -185,7 +216,9 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                             </tr>
 
                             <!-- je vide le tableau $list_cat car sinon, à chaque tour, il cumule les catégories et les ajoute en liste dans le td categorie :     -->
-                            <?php $list_cat=[]?>
+                            <?php $list_cat=[];
+                            $list_auteurs=[];
+                            ?>
                             
                         <?php endforeach; ?>
 
