@@ -9,6 +9,7 @@ if (isset($_POST['btn_add_livre'])) {
 
     $num_ISBN = htmlentities($_POST['num_ISBN']);
     $titre = htmlentities($_POST['titre']);
+
     $illustration = htmlentities($_FILES['illustration']['name']);
     $resum = htmlentities($_POST['resume']);
     $prix = htmlentities($_POST['prix']);
@@ -17,6 +18,7 @@ if (isset($_POST['btn_add_livre'])) {
     $disponibilite = htmlentities($_POST['disponibilite']);
     $dossier_temp = $_FILES["illustration"]["tmp_name"];
     $dossier_destination = PATH_ADMIN . "img/cover/" . $illustration;
+
 
     if (!move_uploaded_file($dossier_temp, $dossier_destination)) {
         echo alert("danger", 'l\'image n\'a pas été téléchargée');
@@ -37,8 +39,8 @@ if (isset($_POST['btn_add_livre'])) {
         ':disponibilite' => $disponibilite,
     );
 
-    if ($requete->execute($data)) {
-        $_SESSION['error_add_livre'] = false;
+    if (!$requete->execute($data)) {
+        $_SESSION['error_add_livre'] = true;
         header('location:update.php');
         die();
     } 
@@ -57,7 +59,30 @@ if (isset($_POST['btn_add_livre'])) {
                echo 'petit pb là';
            }
         }
-        $_SESSION['error_add_livre'] = true;
+
+         // enregistrement de ACTION-UTILISATEUR
+        
+         $sql='SELECT id FROM action WHERE libelle="ajouter"';
+         $requete=$bdd->query($sql);
+     
+         $id_action=$requete->fetch(PDO::FETCH_ASSOC);
+         $id_action=implode($id_action);
+     
+         
+         $sql='INSERT INTO utilisateur_action (id_utilisateur, id_action, id_livre, date) VALUES(:id_utilisateur, :id_action, :id_livre , NOW())';
+         $requete=$bdd->prepare($sql);
+         $data=[
+             ':id_utilisateur'=> $_SESSION['user']['id'],
+             ':id_action'=> $id_action,
+             ':id_livre'=> $id_livre
+         ];
+ 
+         if( !$requete->execute($data)){ 
+             $_SESSION['error_add_livre'] = true;
+             header('location:index.php');
+             die();
+         }
+        $_SESSION['error_add_livre'] = false;
         header('location:index.php');
         die();
 }
@@ -128,7 +153,6 @@ if (isset($_POST['btn_update_livre'])) {
         ];
     }
 
-
     if (!$requete->execute($data)) { 
 
         $_SESSION['error_update_livre'] = true;
@@ -144,9 +168,6 @@ if (isset($_POST['btn_update_livre'])) {
 
         $data=[':id_livre'=>$id];
 
-        // var_dump($requete);
-        // die;
-
         if(!$requete->execute($data)){
             echo 'marche pas';
             // erreur
@@ -155,29 +176,14 @@ if (isset($_POST['btn_update_livre'])) {
             header('location: update.php?id='.$id);
         };
 
-        // echo 'marche';
-        // var_dump($requete);
-        // die;
-// var_dump($categories);
-// die;
-
         foreach($categories as $id_categorie){
-        // var_dump($categories);
-        // die;
-        // var_dump($id_categorie);
         $sql='INSERT INTO categorie_livre VALUES(:id_categorie, :id_livre)';
         $requete=$bdd->prepare($sql);
         $data=[
             ':id_categorie' => $id_categorie,
             ':id_livre' => $id
         ];
-        // var_dump($id_categorie);
-        // var_dump($id);
-        // var_dump($data);
-        // var_dump($requete);
-        // die;
         if(!$requete->execute($data)){
-            // erreur
             echo 'probleme';
             die;
             header('location:update.php?id='.$id);
@@ -186,23 +192,16 @@ if (isset($_POST['btn_update_livre'])) {
 
         $sql= 'DELETE FROM auteur_livre WHERE id_livre = :id_livre ';
         $requete=$bdd->prepare($sql);
-
         $data=[':id_livre'=>$id];
-
-        // var_dump($requete);
-        // die;
 
         if(!$requete->execute($data)){
             echo 'marche pas';
-            // erreur
             $requete->errorInfo();
             die;
             header('location: update.php?id='.$id);
         };
 
         foreach($auteurs as $id_auteur){
-        // var_dump($categories);
-        // var_dump($id_categorie);
         $sql='INSERT INTO auteur_livre VALUES(:id_auteur, :id_livre, NOW())';
         $requete=$bdd->prepare($sql);
         $data=[
@@ -210,21 +209,36 @@ if (isset($_POST['btn_update_livre'])) {
             ':id_livre' => $id
         ];
 
-
-        // var_dump($id_categorie);
-        // var_dump($id);
-        // var_dump($data);
-        // var_dump($requete);
-        // die;
         if(!$requete->execute($data)){
-            // erreur
             echo 'probleme';
             die;
             header('location:update.php?id='.$id);
         };
         }
 
+        // enregistrement de ACTION-UTILISATEUR
+        
+        $sql='SELECT id FROM action WHERE libelle="modifier"';
+        $requete=$bdd->query($sql);
+    
+        $id_action=$requete->fetch(PDO::FETCH_ASSOC);
+        $id_action=implode($id_action);
+    
+        
+        $sql='INSERT INTO utilisateur_action (id_utilisateur, id_action, id_livre, date) VALUES(:id_utilisateur, :id_action, :id_livre , NOW())';
+        $requete=$bdd->prepare($sql);
+        $data=[
+            ':id_utilisateur'=> $_SESSION['user']['id'],
+            ':id_action'=> $id_action,
+            ':id_livre'=> $id
+        ];
 
+        if( !$requete->execute($data)){ 
+            var_dump($requete);die;
+            $_SESSION['error_update_livre'] = true;
+            header('location:index.php');
+            die();
+        }
 
         header('location:index.php');
         die();

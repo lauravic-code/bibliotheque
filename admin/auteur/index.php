@@ -111,7 +111,7 @@ $auteurs = $requete->fetchAll(PDO::FETCH_ASSOC);
                             <th scope="col">Photo</th>
                             <th scope="col" class="colonne_btn"></th>
                             <th scope="col" class="colonne_btn"></th>
-                            <th scope="col" class="colonne_btn"></th>
+                            
 
                         </tr>
                     </thead>
@@ -141,7 +141,6 @@ $auteurs = $requete->fetchAll(PDO::FETCH_ASSOC);
 
                                 <td><a href="<?= URL_ADMIN ?>auteur/single.php?id=<?= $auteur["id"] ?>" class="btn btn-primary">Voir</a></td>
                                 <td><a href="<?= URL_ADMIN ?>auteur/update.php?id=<?= $auteur["id"] ?>" class="btn btn-warning">Modifier</a></td>
-                                <td><a href="<?= URL_ADMIN ?>auteur/action.php?id=<?= $auteur["id"] ?>" class="btn btn-danger">Supprimer</a></td>
                             </tr>
                         <?php endforeach; ?>
 

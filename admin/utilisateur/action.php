@@ -43,15 +43,14 @@ if(isset($_POST['btn_add_utilisateur'])){
             ':code_postal' => $code_postal,
         );    
 
-        if( $requete->execute($data)){
-            $_SESSION['error_add_utilisateur'] =false;
-            header('location:'. URL_ADMIN . 'utilisateur/index.php');
-            die();
-        }else{
-            $_SESSION['error_add_utilisateur'] = true;
+        if( !$requete->execute($data)){ $_SESSION['error_add_utilisateur'] = true;
             header('location:'. URL_ADMIN . 'utilisateur/add.php');
             die();
+           
         }
+        $_SESSION['error_add_utilisateur'] =false;
+            header('location:'. URL_ADMIN . 'utilisateur/index.php');
+            die();
 }
 // *************************************************** UPDATE UTILISATEUR****************************************************
 

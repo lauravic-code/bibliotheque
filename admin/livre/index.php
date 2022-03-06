@@ -9,6 +9,7 @@ if (!isConnect()) {
 }
 
 
+
 // $sql = "SELECT livre.id AS id_livre, livre.num_ISBN, livre.titre, livre.illustration, livre.resume, livre.prix, livre.nb_pages, livre.date_achat, livre.disponibilite 
 // FROM categorie_livre 
 // INNER JOIN livre 
@@ -149,7 +150,7 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                                     $list_cat[]=implode('',$cat[0]);
                                 }
                             }else{
-                                $list_cat='non categorisé';
+                                $list_cat[]='non categorisé';
                             }
 
                             $sql='SELECT nom, prenom 
@@ -176,7 +177,7 @@ $livres = $requete->fetchAll(PDO::FETCH_ASSOC);
                                     $list_auteurs[]=implode(' ',$auteurs[0]);
                                 }
                             }else{
-                                $list_auteurs='non categorisé';
+                                $list_auteurs[]='non categorisé';
                             }
 
                             
